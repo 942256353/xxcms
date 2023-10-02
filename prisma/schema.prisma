@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  name      String
+  password  String
+  secret    String?
+  email     String?
+  mobile    String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  app       app[]
+}
+
+model app {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  title     String
+  content   String   @db.Text
+  preview   String
+  is_free   Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      user     @relation(fields: [userId], references: [id],onDelete: Cascade)
+  userId    Int      @db.UnsignedInt
+}
