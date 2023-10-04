@@ -1,7 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { loginDto } from './dto/login.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { Auth } from './auth.decorator';
+import { CurrentUser } from './current-user.decorator';
+import { user } from '@prisma/client';
+import { AdminGuard } from './admin.guard';
+import { Admin } from './admin.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -14,28 +20,11 @@ export class AuthController {
   login(@Body() dto: loginDto) {
    return this.authService.login(dto);
   }
-  // @Post()
-  // create(@Body() createAuthDto: CreateAuthDto) {
-  //   return this.authService.create(createAuthDto);
-  // }
-
-  // @Get()
-  // findAll() {
-  //   return this.authService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.authService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-  //   return this.authService.update(+id, updateAuthDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.authService.remove(+id);
-  // }
+  @Get('test')
+  //@UseGuards(AuthGuard('jwt'),AdminGuard)
+  // @Auth()
+  @Admin()
+  test(@CurrentUser() user: user){
+    return user;
+  }
 }

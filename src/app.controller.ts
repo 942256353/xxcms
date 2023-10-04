@@ -8,6 +8,6 @@ export class AppController {
     }
     @Get()
     getHello(): any {
-        return this.config.get('city')
+        return this.config.get('name')
     }
 }
