@@ -7,6 +7,9 @@
         ".vscode": true,
         "dist": true,
         "node_modules": true,
-        "test": true
+        "test": true,
+        "vue/.vscode": true,
+        "vue/core": true,
+        "vue/public": true
     }
 }
