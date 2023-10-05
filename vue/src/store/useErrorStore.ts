@@ -18,9 +18,9 @@ export default defineStore('error', {
     resetError() {
       this.errors = {}
     },
-    setErrors(errors: Record<string, string[]>) {
-      Object.entries(errors).forEach(([key, value]) => {
-        this.errors[key] = value[0]
+    setErrors(errors: Record<string, {field:string,message:string}[]>) {
+      errors.message.forEach(({field,message}) => {
+        this.errors[field] = message
       })
     },
     clearError(name: string) {

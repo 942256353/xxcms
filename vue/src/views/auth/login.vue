@@ -12,8 +12,8 @@ const { login, form } = useAuth()
         <div>
           <h2 class="text-center text-gray-700 text-lg mt-3">用户登录</h2>
           <div class="mt-8">
-            <HdFormInput v-model="form.account" placeholder="请输入邮箱" v-clearError="'account'" />
-            <HdError name="account" />
+            <HdFormInput v-model="form.name" placeholder="请输入邮箱" v-clearError="'name'" />
+            <HdError name="name" />
             <HdFormInput
               v-model="form.password"
               class="mt-3"
@@ -21,12 +21,9 @@ const { login, form } = useAuth()
               placeholder="请输入登录密码"
               v-clearError="'password'" />
             <HdError name="password" />
-            <!-- <Captcha class="mt-2" v-model:captcha="form.captcha" v-model:captcha_key="form.captcha_key" /> -->
           </div>
+          <HdCaptcha class="mt-3" v-model:captcha_value="form.captcha.value" v-model:captcha_key="form.captcha.key"/>
           <HdFormButton class="w-full mt-3 primary">登录</HdFormButton>
-          <!-- <div class="flex justify-center mt-3">
-            <WechatLogin />
-          </div> -->
         </div>
         <Footer />
       </div>
