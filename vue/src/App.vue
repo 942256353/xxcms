@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+// import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 </script>
 
 <template>
   <main>
-    <ElConfigProvider :locale="zhCn">
+    <!-- <ElConfigProvider :locale="zhCn"> -->
+      <ElConfigProvider>
       <RouterView v-slot="{ Component }">
         <template v-if="Component">
           <Suspense>

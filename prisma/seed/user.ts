@@ -8,7 +8,8 @@ export default async()=>{
     await prisma.user.create({
         data: {
             name: Random.cname(),
-            password: Random.string()
+            password: Random.string(),
+            nickname:Random.cname()
         }
     })
     await prisma.user.update({

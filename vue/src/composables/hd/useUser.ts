@@ -1,4 +1,4 @@
-import { ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { http } from '@/plugins/axios'
 import { ref } from 'vue'
 
@@ -25,10 +25,15 @@ export default () => {
   const update = async (data: any) => {
     model.value = await http.request<UserModel>({
       url: `user/update`,
-      method: 'PUT',
+      method: 'Put',
       data,
     })
     useUserStore().getCurrentUser()
+    ElMessage({
+      type: 'success',
+      message: '更新成功',
+      grouping: true
+    })
   }
 
   const updatePassword = async (data: any) => {

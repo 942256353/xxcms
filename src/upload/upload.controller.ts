@@ -11,7 +11,9 @@ export class UploadController {
   @Uploader('image')
   @Auth()
   image(@UploadedFile() file: Express.Multer.File) {
-    return file
+    return {
+      url:file.path
+    }
   }
 
 }

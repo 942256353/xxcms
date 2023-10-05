@@ -3,6 +3,8 @@ prisma/*
 !prisma/schema.prisma
 !prisma/seed
 .env
+/public/*
+!/public/.gitkeep
 # compiled output
 /dist
 /node_modules
