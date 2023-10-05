@@ -1,6 +1,7 @@
 prisma/*
 !prisma/seed.ts
 !prisma/schema.prisma
+!prisma/seed
 .env
 # compiled output
 /dist
