@@ -5,13 +5,15 @@ import { Random } from "mockjs"
 const prisma = new PrismaClient()
 
 export default async()=>{
-    await prisma.user.create({
-        data: {
-            name: Random.cname(),
-            password: Random.string(),
-            nickname:Random.cname()
-        }
-    })
+    for (let i = 0; i < 30; i++) {
+        await prisma.user.create({
+            data: {
+                name: Random.cname(),
+                password: Random.string(),
+                nickname:Random.cname()
+            }
+        })
+    }
     await prisma.user.update({
         where: {
             id: 1

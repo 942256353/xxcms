@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import footerVue from './footer.vue'
+import NavBar from '@/components/hd/navBar.vue'
 </script>
 <template>
   <main>
+    <NavBar />
     <RouterView v-slot="{ Component, route }">
       <template v-if="Component">
         <component :is="Component" :key="route.fullPath" class="w-full 2xl:w-page mx-auto p-3 lg:mt-5" />

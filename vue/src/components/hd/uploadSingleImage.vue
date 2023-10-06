@@ -5,7 +5,7 @@ const { uploadImage } = useUpload()
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string
+    modelValue?: string
     url?: string
     allow_width?: number
     allow_height?: number

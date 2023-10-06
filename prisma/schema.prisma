@@ -11,7 +11,7 @@ datasource db {
 }
 
 model user {
-  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  id        Int       @id @default(autoincrement()) @db.UnsignedInt
   name      String
   nickname  String?
   password  String
@@ -19,16 +19,36 @@ model user {
   email     String?
   mobile    String?
   avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  comment   comment[]
 }
 
 model soft {
-  id        Int      @id @default(autoincrement()) @db.UnsignedInt
-  title     String
-  content   String   @db.Text
-  preview   String
-  is_free   Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int       @id @default(autoincrement()) @db.UnsignedInt
+  title       String
+  content     String    @db.Text
+  description String
+  preview     String
+  is_free     Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  comment     comment[]
+}
+
+model comment {
+  id        Int       @id @default(autoincrement()) @db.UnsignedInt
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  //发布者
+  user      user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  //软件
+  softId    Int
+  soft      soft      @relation(fields: [softId], references: [id], onDelete: Cascade)
+  //回复
+  commentId Int?
+  reply     comment?  @relation("replys", fields: [commentId], references: [id], onDelete: Cascade)
+  replys    comment[] @relation("replys")
 }

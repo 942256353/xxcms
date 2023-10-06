@@ -9,7 +9,8 @@ export const soft = async()=>{
         data:{
             title:Random.ctitle(),
             content:Random.cparagraph(),
-            preview:Random.image('300x300')
+            preview:Random.image('800x450'),
+            description:Random.cparagraph()
         }
     })
   }

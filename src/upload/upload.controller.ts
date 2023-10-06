@@ -12,7 +12,7 @@ export class UploadController {
   @Auth()
   image(@UploadedFile() file: Express.Multer.File) {
     return {
-      url:file.path
+      url:'/'+file.path
     }
   }
 

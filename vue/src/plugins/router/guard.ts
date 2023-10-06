@@ -16,7 +16,7 @@ async function beforeEach(to: RouteLocationNormalized, from: RouteLocationNormal
 
   if (to.meta.auth && !isLogin()) {
     storage.set(CacheEnum.REDIRECT_ROUTE_NAME, to.fullPath)
-    ElMessage.success('请登录后操作')
+    ElMessage.warning('请登录后操作')
     return { name: RouteEnum.LOGIN }
   }
 
