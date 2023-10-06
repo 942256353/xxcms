@@ -7,29 +7,32 @@ import { user } from '@prisma/client';
 @Injectable()
 export class CommentService {
   constructor(private prisma:PrismaService){}
-  create(dto: CreateCommentDto,user:user,sid:number) {
+  create(createCommentDto: CreateCommentDto,user:user,sid:number) {
+    const {commentId,...dto} = createCommentDto;
    return this.prisma.comment.create({
       data: {
         ...dto,
         soft:{connect:{id:+sid}},
-        user:{connect:{id:user.id}}
+        user:{connect:{id:user.id}},
+        reply:commentId && {connect:{id:+commentId}}
+      },
+      include:{
+        replys:true
       }
     })
   }
 
-  findAll() {
-    return `This action returns all comment`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
-  }
-
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+  findAll(sid:number) {
+    return  this.prisma.comment.findMany({
+      where:{
+        softId:+sid
+      }
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} comment`;
+    return this.prisma.comment.deleteMany({
+      where:{id}
+    });
   }
 }

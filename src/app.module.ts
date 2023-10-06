@@ -8,13 +8,14 @@ import { UserModule } from './user/user.module';
 import { CaptchaModule } from './captcha/captcha.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { CommentModule } from './comment/comment.module';
+import { PolicyModule } from './policy/policy.module';
 
 
 @Module({
   imports: [CommonModule, AuthModule, SoftModule, UploadModule, UserModule, CaptchaModule,CacheModule.register({
     ttl:600,
     isGlobal:true
-  }), CommentModule],
+  }), CommentModule, PolicyModule],
   controllers: [AppController],
   providers: [],
 })
