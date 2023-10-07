@@ -28,6 +28,7 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       emptyOutDir: true,
+      outDir: '../vue_dist',
       rollupOptions: {
         output: {
           manualChunks(id: string) {

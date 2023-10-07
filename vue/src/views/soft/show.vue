@@ -2,7 +2,8 @@
 const { find, model } = useSoft()
 const route = useRoute()
 model.value = await find(+route.params.id)
-const tabName = ref('content')
+const tabName = ref('comment')
+
 </script>
 <template>
   <main class="">
@@ -20,7 +21,9 @@ const tabName = ref('content')
           <v-md-preview :text="model.content"></v-md-preview>
         </section>
       </el-tab-pane>
-      <el-tab-pane label="问题讨论" name="comment"></el-tab-pane>
+      <el-tab-pane label="问题讨论" name="comment">
+        <HdCommentList :sid="model.id"/>
+      </el-tab-pane>
     </el-tabs>
   </main>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const {user} = useUserStore()
 import dayjs from 'dayjs'
+const {user} = useUserStore()
+
 </script>
 
 <template>

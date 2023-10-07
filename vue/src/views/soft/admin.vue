@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import useSoft from '@/composables/useSoft'
+// import useSoft from '@/composables/useSoft'
 const route = useRoute()
 const { collections, getAll } = useSoft()
 await getAll(+(route.query.page || 1))
@@ -36,3 +36,4 @@ await getAll(+(route.query.page || 1))
 </template>
 <style scoped>
 </style>
+@/composables/hd/useSoft

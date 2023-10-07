@@ -8,20 +8,21 @@ import { user } from '@prisma/client';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector,private readonly prisma:PrismaService){}
-async canActivate(
+  constructor(private readonly reflector: Reflector, private readonly prisma: PrismaService) { }
+  async canActivate(
     context: ExecutionContext,
-  ):Promise<boolean>{
-    const {policy,action} = this.reflector.get<any>(POLICY_KEY, context.getHandler()) as any;
+  ): Promise<boolean> {
+    const { policy, action } = this.reflector.get<any>(POLICY_KEY, context.getHandler()) as any;
     const method = context.getHandler().name;
-    const request = context.switchToHttp().getRequest() as Request; 
+    const request = context.switchToHttp().getRequest() as Request;
     const user = request.user as user;
+    const controller  = context.getClass().name.replace('Controller','').toLowerCase()
     //超管放行
-    if(user?.id==1) return true
-    const model =await this.prisma.comment.findUnique({
-      where: {id:+request.params.id||0},
+    if (user?.id == 1) return true
+    const model = await this.prisma[controller].findUnique({
+      where: { id: +request.params.id || 0 },
     })
-    const policyInstance = new policy(this.prisma,request)
-    return policyInstance[action||method](model,user)
+    const policyInstance = new policy(this.prisma, request)
+    return policyInstance[action || method](model, user)
   }
 }
