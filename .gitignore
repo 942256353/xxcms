@@ -7,6 +7,7 @@ prisma/*
 !/public/.gitkeep
 # compiled output
 /dist
+/vue_dist
 /node_modules
 uploads
 
