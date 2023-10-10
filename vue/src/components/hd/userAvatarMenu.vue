@@ -6,6 +6,7 @@ import config from '@/config'
 
 const { logout } = useAuth()
 const storeUser = useUserStore()
+const avatarMenu =storeUser?.user?.id==1?config.user.avatarMenu:config.user.avatarMenu.slice(1)
 </script>
 
 <template>
@@ -16,12 +17,12 @@ const storeUser = useUserStore()
           <ElImage :src="storeUser.user.avatar" fit="cover" class="w-7 h-7 rounded-sm" />
           <div class="flex flex-col text-xs ml-2 text-gray-600 font-light">
             {{ storeUser.user?.name }}
-            <span>{{ dayjs(storeUser.user?.created_at).fromNow() }}注册 </span>
+            <span>{{ dayjs(storeUser.user?.createdAt).fromNow() }}注册 </span>
           </div>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-for="(menu, index) of config.user.avatarMenu" :key="index">
+            <el-dropdown-item v-for="(menu, index) of avatarMenu" :key="index">
               <router-link :to="{ name: menu.routeName }"> {{ menu.title }} </router-link>
             </el-dropdown-item>
             <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>

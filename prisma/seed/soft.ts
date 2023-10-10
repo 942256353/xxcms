@@ -10,6 +10,7 @@ export const soft = async()=>{
             title:Random.ctitle(),
             content:Random.cparagraph(),
             preview:Random.image('800x450'),
+            filePath:Random.url(),
             description:Random.cparagraph()
         }
     })

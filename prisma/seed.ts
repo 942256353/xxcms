@@ -5,8 +5,8 @@ import { soft } from './seed/soft'
 import { comment } from './seed/comment'
 const prisma = new PrismaClient()
 async function run() {
-    await user()
-    await soft()
-    await comment()
+    // await user()
+    // await soft()
+    // await comment()
 }
 run()

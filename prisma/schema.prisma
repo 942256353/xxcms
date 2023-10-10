@@ -30,6 +30,7 @@ model soft {
   content     String    @db.Text
   description String
   preview     String
+  filePath    String
   is_free     Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

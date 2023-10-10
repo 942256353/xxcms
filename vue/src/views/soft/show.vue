@@ -1,9 +1,12 @@
 <script lang='ts' setup>
 const { find, model } = useSoft()
 const route = useRoute()
+
 model.value = await find(+route.params.id)
 const tabName = ref('comment')
-
+const downLoad = () => {
+    window.open(import.meta.env.VITE_API_URL+'/'+model.value.filePath,'self')
+}
 </script>
 <template>
   <main class="">
@@ -11,7 +14,7 @@ const tabName = ref('comment')
       <h1 class="text-xl font-bold flex justify-between opacity-90">
         {{ model.title }}
         <div class="">
-          <el-button type="primary" size="default" @click="">下载软件</el-button>
+          <el-button type="primary" size="default" @click="downLoad">下载软件</el-button>
         </div>
       </h1>
     </section>

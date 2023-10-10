@@ -15,8 +15,8 @@ interface UserModel {
   wakatime?: string
   openid?: string
   unionid?: string
-  created_at: string
-  updated_at: string
+  createdAt: string
+  updatedAt: string
 }
 interface ModelSoft {
   id: number;
@@ -24,6 +24,7 @@ interface ModelSoft {
   content: string;
   description:string;
   preview: string;
+  filePath:string;
   is_free: boolean;
   createdAt: string;
   updatedAt: string;

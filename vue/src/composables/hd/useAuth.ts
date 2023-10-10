@@ -1,12 +1,13 @@
 import { http } from '@/plugins/axios'
 import router from '@/plugins/router'
+import { ElMessage } from 'element-plus'
 const storage = useStorage()
 
 export default () => {
   const form = reactive({
-    name: 'admin',
-    password: 'admin888',
-    password_confirmation: 'admin888',
+    name: '',
+    password: '',
+    password_confirmation: '',
     captcha:{
       key:'',
       value:''
@@ -54,9 +55,17 @@ export default () => {
         data: form,
       })
       storage.set(CacheEnum.TOKEN_NAME, token)
-      router.push(RouteEnum.HOME)
-      // const route = router.resolve({ name: RouteEnum.ADMIN })
-      // location.href = route.fullPath
+      // router.push({name:RouteEnum.HOME})
+      ElMessage.success({
+        message: '登录成功',
+        type: 'success',
+        duration: 1000,
+        onClose: () => {
+          const route = router.resolve({ name: RouteEnum.HOME })
+          location.href = route.fullPath
+        },
+      })
+     
     } catch (error) {
       // useCaptcha().getCaptcha()
     }
@@ -70,7 +79,16 @@ export default () => {
         method: 'POST',
         data: form,
       })
-      storage.set(CacheEnum.TOKEN_NAME, token)
+      ElMessage.success({
+        message: '注册成功',
+        type: 'success',
+        duration: 1000,
+        onClose: () => {
+          storage.set(CacheEnum.TOKEN_NAME, token)
+          router.push({name:RouteEnum.LOGIN})
+        },
+      })
+     
       // const route = router.resolve({ name: RouteEnum.ADMIN })
       // location.href = route.fullPath
     } catch (error) {

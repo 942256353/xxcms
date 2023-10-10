@@ -1,4 +1,5 @@
 <script lang='ts' setup>
+import useComment from '../../composables/hd/useComment';
 import dayjs from 'dayjs'
 import { use } from 'echarts'
 const { comment } = defineProps<{ comment: CommentModel }>()
@@ -9,7 +10,7 @@ const {authorize} = useAuth()
 const emit = defineEmits<{
   // (e:'del'):void
   del:[id:number],
-  add:[comment:CommentModel]
+  add:[comment:any]
 }>()
 </script>
 <template>
@@ -18,7 +19,7 @@ const emit = defineEmits<{
       <div class="flex gap-2">
         <img :src="comment.user.avatar" alt="" class="w-8 h-8 rounded-full" />
         <div class="flex flex-col">
-          <div class="font-bold">{{ comment.user.nickname }} #{{comment.id}}</div>
+          <div class="font-bold">{{ comment.user.nickname }} #话题{{comment.id}}</div>
           <div class="flex items-center text-sm gap-2">
             <div class="flex items-center text-gray-500">
               <icon-time theme="outline" size="12" />
@@ -34,10 +35,14 @@ const emit = defineEmits<{
         <icon-delete-one theme="outline" size="14" @click="$emit('del',comment.id)"/>
       </div>
     </div>
-    <div class="p-3">{{ comment.content }}</div>
+    <div class="p-3">{{comment.commentId?`@话题${comment.commentId}#:`:''}}&nbsp;{{ comment.content }}</div>
     <div class="p-3" v-if="showTextarea">
       <el-input v-model="model.content" type="textarea" placeholder=""  clearable></el-input>
-      <el-button type="primary" size="small" @click="$emit('add',model)">提交</el-button>
+      <el-button type="primary" size="small" @click="()=>{
+        $emit('add',model)
+        showTextarea=false
+        model.content=''
+      }">提交</el-button>
       
     </div>
     <!-- <div class="bg-gray-50 p-3 border mt-3" v-for="reply of comment.replys" :key="reply.id">

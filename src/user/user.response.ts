@@ -5,7 +5,7 @@ export class UserResponse extends JsonResponse<user>{
     protected hidden:(keyof user)[]=['password']
     public make(): user {
         super.make();
-        this.data.avatar = this.data.avatar || '/public/assets/avatar.png'
+        this.data.avatar = this.data.avatar || '/public/assets/avatar.jpeg'
         return this.data;
     }
 }

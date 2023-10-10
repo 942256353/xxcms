@@ -36,7 +36,7 @@ const go = (route: RouteRecordRaw) => {
           fill="#dcdcdc"
           class="mr-2"
           @click="$router.push({ name: RouteEnum.HOME })" />
-        <span class="text-md cursor-pointer" @click="$router.push({ name: RouteEnum.ADMIN })">晚八点直播</span>
+        <span class="text-md cursor-pointer" @click="$router.push({ name: RouteEnum.ADMIN })">XXCMS后台管理</span>
       </div>
       <!-- 菜单 -->
       <div class="container">

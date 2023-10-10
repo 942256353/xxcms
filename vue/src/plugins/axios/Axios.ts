@@ -80,13 +80,13 @@ export default class Axios {
           response: { status, data },
         } = error
         const message =data.message
-
         switch (status) {
           case HttpCodeEnum.UNAUTHORIZED:
             storage.remove(CacheEnum.TOKEN_NAME)
             router.push({ name: RouteEnum.LOGIN })
             break
           case HttpCodeEnum.UNPROCESSABLE_ENTITY:
+            ElMessage({ type: 'error', message: message[0]?.message ?? '请求发生错误',grouping: true})
             useErrorStore().setErrors(error.response.data.errors ?? error.response.data)
             break
           case HttpCodeEnum.FORBIDDEN:
