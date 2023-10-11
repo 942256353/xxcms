@@ -13,7 +13,7 @@ const downLoad = () => {
     <section class="bg-white p-5 rounded-md">
       <h1 class="text-xl font-bold flex justify-between items-center opacity-90">
         <div class="flex items-center gap-2">{{ model.title }} 
-          <el-tag type="success" size="normal"  effect="plain">{{model.version}}</el-tag>
+          <el-tag type="success" size="small"  effect="plain">{{model.version}}</el-tag>
         </div>
 
         <div class="">

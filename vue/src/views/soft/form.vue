@@ -6,6 +6,7 @@ const route = useRoute()
 if (route.params.id) {
   model.value = await find(+route.params.id)
 }
+const env = import.meta.env.VITE_API_URL
 let fileUrl = ref<string>('')
 
 const headers = {
@@ -77,7 +78,7 @@ const handleError: UploadProps['onError'] = (err, file, fileList) => {
           <el-upload
             v-model="fileList"
             class="upload-demo"
-            action="http://localhost:3003/api/upload/file"
+            :action="env+'/api/upload/file'"
             :headers="headers"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
