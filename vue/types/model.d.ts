@@ -25,6 +25,7 @@ interface ModelSoft {
   description:string;
   preview: string;
   filePath:string;
+  version:string;
   is_free: boolean;
   createdAt: string;
   updatedAt: string;

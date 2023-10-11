@@ -37,8 +37,8 @@ const handleUploadImage = async (event: any, insertImage: any, files: any) => {
   const form = new FormData()
   form.append('file', files[0])
   const { url } = await uploadImage(form)
-
-  insertImage({ url })
+  const imgUrl = import.meta.env.VITE_API_URL+url.replaceAll(/\\/g, '/')
+  insertImage({ url:imgUrl })
 }
 </script>
 

@@ -8,11 +8,11 @@ const { destroy } = useSoft()
 
 <template>
   <main class="rounded-sm border flex flex-col">
-    <div class="flex flex-col cursor-pointer" @click="open({ name: 'soft.show',params:{id:soft.id}},'_blank')" >
+    <div class="flex flex-col cursor-pointer overflow-hidden shadow-lg" @click="open({ name: 'soft.show',params:{id:soft.id}},'_blank')" >
       <img
         :src="soft.preview"
         :alt="soft.title"
-        class="aspect-video object-cover"
+        class="aspect-video object-cover hover:scale-105 transition-transform duration-300"
         />
       <h2 class="text-center opacity-90 text-gray-900 p-3">{{ soft.title }}</h2>
       <div class="text-sm opacity-70 px-2 line-clamp-2 flex-grow mb-3 mx-3">

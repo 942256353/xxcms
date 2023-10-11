@@ -31,6 +31,7 @@ model soft {
   description String
   preview     String
   filePath    String
+  version     String
   is_free     Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

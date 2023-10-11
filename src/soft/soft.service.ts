@@ -6,6 +6,7 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { user } from '@prisma/client';
+import fs from 'fs';
 
 @Injectable()
 export class SoftService {
@@ -45,9 +46,17 @@ export class SoftService {
     });
   }
 
-  remove(id: number) {
-    return this.prisma.soft.deleteMany({
-      where:{id}
-    })
+  async remove(id: number) {
+    try {
+      const soft = await this.prisma.soft.findFirst({
+        where:{id}
+      })
+      fs.unlinkSync(soft.filePath)
+      return this.prisma.soft.deleteMany({
+        where:{id}
+      })
+    } catch (error) {
+      return error
+    }
   }
 }

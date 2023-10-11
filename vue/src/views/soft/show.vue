@@ -3,7 +3,7 @@ const { find, model } = useSoft()
 const route = useRoute()
 
 model.value = await find(+route.params.id)
-const tabName = ref('comment')
+const tabName = ref('content')
 const downLoad = () => {
     window.open(import.meta.env.VITE_API_URL+'/'+model.value.filePath,'self')
 }
@@ -11,8 +11,11 @@ const downLoad = () => {
 <template>
   <main class="">
     <section class="bg-white p-5 rounded-md">
-      <h1 class="text-xl font-bold flex justify-between opacity-90">
-        {{ model.title }}
+      <h1 class="text-xl font-bold flex justify-between items-center opacity-90">
+        <div class="flex items-center gap-2">{{ model.title }} 
+          <el-tag type="success" size="normal"  effect="plain">{{model.version}}</el-tag>
+        </div>
+
         <div class="">
           <el-button type="primary" size="default" @click="downLoad">下载软件</el-button>
         </div>

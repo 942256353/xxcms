@@ -62,6 +62,10 @@ const handleError: UploadProps['onError'] = (err, file, fileList) => {
         <el-input v-model="model.description"></el-input>
         <HdError name="description" />
       </el-form-item>
+      <el-form-item label="软件版本">
+        <el-input v-model="model.version"></el-input>
+        <HdError name="version" />
+      </el-form-item>
       <el-form-item label="预览图">
         <div class="flex flex-col">
           <HdUploadSingleImage v-model="model.preview" />
@@ -73,7 +77,7 @@ const handleError: UploadProps['onError'] = (err, file, fileList) => {
           <el-upload
             v-model="fileList"
             class="upload-demo"
-            action="http://43.138.152.177:3003/api/upload/file"
+            action="http://localhost:3003/api/upload/file"
             :headers="headers"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
