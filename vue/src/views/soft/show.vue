@@ -5,12 +5,14 @@ const route = useRoute()
 model.value = await find(+route.params.id)
 const tabName = ref('content')
 const downLoadSoft = async (id:number) => {
-   alert('正在下载')
-
    const filePath = await download(id)
    const url = import.meta.env.VITE_API_URL+'/'+filePath
-   console.log(filePath)
-   window.open(url,'self')
+   //window.open(url,'_seft')
+   const a = document.createElement('a')
+   a.href = url
+   a.download = model.value.name!
+   a.click()
+   a.remove()
 }
 </script>
 <template>

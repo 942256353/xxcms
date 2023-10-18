@@ -2,49 +2,64 @@
 import { ref, nextTick } from 'vue'
 import * as echarts from 'echarts'
 import { echart1, echart2, echart3, echart4 } from './echart'
+import useAdmin from '../../composables/hd/useAdmin'
+const {getAll,collections}  = useAdmin()
+const cards = ref<ICard[]>([
+  {
+    title: '当月注册用户数量',
+    monthCount: 0,
+    iconColor: 'text-violet-500',
+    icon: 'fas fa-address-card',
+    total: 0,
+    totalTitle: '总用户数量',
+  },
+  {
+    title: '当月软件发布数量',
+    monthCount: 0,
+    iconColor: 'text-green-600',
+    icon: 'fas fa-apple-alt',
+    total: 0,
+    totalTitle: '总软件发布数量',
+  },
+  {
+    title: '当月软件下载次数',
+    monthCount: 0,
+    iconColor: 'text-blue-500',
+    icon: 'fas fa-award',
+    total: 0,
+    totalTitle: '总下载次数',
+  },
+  {
+    title: '当月评论数量',
+    monthCount: 0,
+    iconColor: 'text-red-500',
+    icon: 'fas fa-baseball-ball',
+    total: 0,
+    totalTitle: '总评论数量',
+  },
+])
+onMounted(async()=>{
+  await getAll()
+  const cardData = collections.value as AdminModel
+  cards.value[0].monthCount = cardData.currentMonthUsers
+  cards.value[0].total = cardData.userTotal
+  cards.value[1].monthCount = cardData.currentMonthSofts
+  cards.value[1].total = cardData.softTotal
+  cards.value[2].monthCount = cardData.currentMonthDownloads
+  cards.value[2].total = cardData.downloadTotal
+  cards.value[3].monthCount = cardData.currentMonthComments
+  cards.value[3].total = cardData.commentTotal
+})
 
 interface ICard {
   title: string
-  price: number
+  monthCount: number
   icon: string
   iconColor: string
   totalTitle: string
   total: number
 }
-const cards = ref<ICard[]>([
-  {
-    title: '总人数',
-    price: 23343,
-    iconColor: 'text-violet-500',
-    icon: 'fas fa-address-card',
-    total: 2892982,
-    totalTitle: '总人数',
-  },
-  {
-    title: '销售额',
-    price: 18393,
-    iconColor: 'text-green-600',
-    icon: 'fas fa-apple-alt',
-    total: 9783212,
-    totalTitle: '总销售额',
-  },
-  {
-    title: '订单量',
-    price: 63803,
-    iconColor: 'text-blue-500',
-    icon: 'fas fa-award',
-    total: 83493,
-    totalTitle: '总订单数',
-  },
-  {
-    title: '评论数',
-    price: 528994,
-    iconColor: 'text-red-500',
-    icon: 'fas fa-baseball-ball',
-    total: 48920,
-    totalTitle: '总评论',
-  },
-])
+
 
 nextTick(() => {
   echarts.init(document.getElementById('echart1') as HTMLDivElement).setOption(echart1)
@@ -103,3 +118,4 @@ nextTick(() => {
 </template>
 
 <style lang="scss"></style>
+@/composables/hd/useAdmin

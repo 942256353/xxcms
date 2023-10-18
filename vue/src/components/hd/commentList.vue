@@ -18,9 +18,9 @@ const {exec,time} = useIntervalRequest(10,(data:any)=>{
   <main class="">
     <section v-if="collections.length">
       <div v-for="comment of collections" :key="comment.id">
-        <HdCommentItem :comment="comment" @del="del" @add="(data)=>{exec(data)}"/>
+        <HdCommentItem :comment="comment" @del="del" @add="add"/>
         <div class="ml-5">
-          <HdCommentItem :comment="reply" v-for="reply of comment.replys" :replys='comment.replys'  :user="comment.user" :key="reply.id" @del="del" @add="(data)=>{exec(data)}"/>
+          <HdCommentItem :comment="reply" v-for="reply of comment.replys" :replys='comment.replys'  :user="comment.user" :key="reply.id" @del="del" @add="add"/>
         </div>
       </div>
     </section>

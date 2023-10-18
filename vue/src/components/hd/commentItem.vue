@@ -14,7 +14,7 @@ const emit = defineEmits<{
 }>()
 const findName = (replys: CommentModel[],comment:CommentModel) => {
   const replyUser = replys.filter(v=>v.id==comment.replyId)[0]?.user
-  const commentUser = user
+  const commentUser = user as UserModel
   if(replyUser?.id === comment.user.id){
     return ''
   }

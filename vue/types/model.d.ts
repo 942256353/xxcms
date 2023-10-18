@@ -25,7 +25,8 @@ interface ModelSoft {
   description:string;
   preview: string;
   filePath:string;
-  download?:number
+  download?:number;
+  name:string
   version:string;
   is_free: boolean;
   createdAt: string;
@@ -44,6 +45,16 @@ interface CommentModel {
   replys: CommentModel[];
 }
 
+interface AdminModel {
+  downloadTotal: number;
+  commentTotal: number;
+  softTotal: number;
+  userTotal: number;
+  currentMonthDownloads: number;
+  currentMonthUsers: number;
+  currentMonthSofts: number;
+  currentMonthComments: number;
+}
 interface ConfigModel {
   [key: string]: Record<string, any>
 }

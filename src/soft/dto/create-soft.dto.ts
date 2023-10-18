@@ -13,4 +13,6 @@ export class CreateSoftDto {
     description:string;
     @IsNotEmpty({message:'软件版本不能为空'})
     version:string;
+    @IsNotEmpty({message:'软件名字不能为空'})
+    name:string;
 }

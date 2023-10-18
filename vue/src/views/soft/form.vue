@@ -38,8 +38,12 @@ const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
 }
 
 const handleSuccess: UploadProps['onSuccess'] = (response, uploadFiles) => {
+  console.log(uploadFiles)
   fileUrl.value = response.url
   model.value.filePath = response.url
+  const lastIndex = uploadFiles.name.lastIndexOf('.')
+  const suffix = uploadFiles.name.substring(0,lastIndex)
+  model.value.name = suffix
   ElMessage.success(`上传成功`)
 }
 
@@ -67,7 +71,7 @@ const handleError: UploadProps['onError'] = (err, file, fileList) => {
         <el-input v-model="model.version"></el-input>
         <HdError name="version" />
       </el-form-item>
-      <el-form-item label="预览图">
+       <el-form-item label="预览图">
         <div class="flex flex-col">
           <HdUploadSingleImage v-model="model.preview" />
           <HdError name="preview" />
@@ -95,6 +99,11 @@ const handleError: UploadProps['onError'] = (err, file, fileList) => {
           <HdError name="filePath" />
         </div>
       </el-form-item>
+      <el-form-item label="软件名字">
+        <el-input v-model="model.name"></el-input>
+        <HdError name="name" />
+      </el-form-item>
+     
       <el-form-item label="使用说明">
         <HdMarkdownEditor v-model="model.content" />
         <HdError name="content" />

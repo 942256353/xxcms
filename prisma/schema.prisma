@@ -32,6 +32,7 @@ model soft {
   preview     String
   filePath    String
   download    Int?       @default(0)
+  name        String
   version     String
   is_free     Boolean   @default(true)
   createdAt   DateTime  @default(now())
