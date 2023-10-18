@@ -17,7 +17,7 @@ export class CommentController {
 
   @Post()
   @Auth()
-  @Throttle({ default: { limit: 1, ttl: 20000 } })
+  @Throttle({ default: { limit: 10, ttl: 5000 } })
   async create(@Body() createCommentDto: CreateCommentDto, @CurrentUser() user: user, @Param('sid') sid: number) {
     const comment = await this.commentService.create(createCommentDto, user, +sid)
     return new CommentResponse(comment).make()
@@ -26,6 +26,7 @@ export class CommentController {
   @Get()
   @Auth()
   async findAll(@Param('sid') sid: number) {
+    console.log(sid)
     const comments = await this.commentService.findAll(+sid);
     return comments.map(comment => {
       return new CommentResponse(comment).make()

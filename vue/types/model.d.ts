@@ -25,6 +25,7 @@ interface ModelSoft {
   description:string;
   preview: string;
   filePath:string;
+  download?:number
   version:string;
   is_free: boolean;
   createdAt: string;
@@ -38,6 +39,7 @@ interface CommentModel {
   userId: number;
   softId: number;
   commentId?: any;
+  replyId?: any;
   user: UserModel;
   replys: CommentModel[];
 }

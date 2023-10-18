@@ -39,5 +39,10 @@ export default () => {
             url: `soft/${id}`
         })
     }
-    return { getAll, collections, model, add,destroy,find,update}
+    const download = async (id: number) => {
+        return http.request<string>({
+            url: `soft/${id}/download`
+        })
+    }
+    return { getAll, collections, model, add,destroy,find,update,download}
 }

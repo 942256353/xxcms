@@ -6,5 +6,6 @@ export class CreateCommentDto {
     content:string;
 
     @Allow()
+    replyId?:number;
     commentId?:number;
 }

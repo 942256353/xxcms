@@ -82,6 +82,7 @@ export default class Axios {
         const message =data.message
         switch (status) {
           case HttpCodeEnum.UNAUTHORIZED:
+            ElMessage.error('请先登录后再操作')
             storage.remove(CacheEnum.TOKEN_NAME)
             router.push({ name: RouteEnum.LOGIN })
             break

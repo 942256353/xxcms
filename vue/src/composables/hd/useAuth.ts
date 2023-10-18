@@ -85,7 +85,9 @@ export default () => {
         duration: 1000,
         onClose: () => {
           storage.set(CacheEnum.TOKEN_NAME, token)
-          router.push({name:RouteEnum.LOGIN})
+          const route = router.resolve({ name: RouteEnum.HOME })
+          location.href = route.fullPath
+          // router.push({name:RouteEnum.LOGIN})
         },
       })
      

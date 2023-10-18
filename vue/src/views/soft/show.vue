@@ -1,11 +1,16 @@
 <script lang='ts' setup>
-const { find, model } = useSoft()
+const { find, model,download } = useSoft()
 const route = useRoute()
 
 model.value = await find(+route.params.id)
 const tabName = ref('content')
-const downLoad = () => {
-    window.open(import.meta.env.VITE_API_URL+'/'+model.value.filePath,'self')
+const downLoadSoft = async (id:number) => {
+   alert('正在下载')
+
+   const filePath = await download(id)
+   const url = import.meta.env.VITE_API_URL+'/'+filePath
+   console.log(filePath)
+   window.open(url,'self')
 }
 </script>
 <template>
@@ -17,7 +22,7 @@ const downLoad = () => {
         </div>
 
         <div class="">
-          <el-button type="primary" size="default" @click="downLoad">下载软件</el-button>
+          <el-button type="primary" size="default" @click="downLoadSoft(+model.id)">下载软件</el-button>
         </div>
       </h1>
     </section>
@@ -27,7 +32,7 @@ const downLoad = () => {
           <v-md-preview :text="model.content"></v-md-preview>
         </section>
       </el-tab-pane>
-      <el-tab-pane label="问题讨论" name="comment">
+      <el-tab-pane label="使用交流" name="comment">
         <HdCommentList :sid="model.id"/>
       </el-tab-pane>
     </el-tabs>

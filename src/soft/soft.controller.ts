@@ -9,17 +9,17 @@ import { Admin } from 'src/auth/admin.decorator';
 
 @Controller('soft')
 export class SoftController {
-  constructor(private readonly softService: SoftService) {}
+  constructor(private readonly softService: SoftService) { }
 
   @Post()
   @Admin()
-  create(@Body() createSoftDto: CreateSoftDto,@CurrentUser() user:user) {
-    return this.softService.create(createSoftDto,user);
+  create(@Body() createSoftDto: CreateSoftDto, @CurrentUser() user: user) {
+    return this.softService.create(createSoftDto, user);
   }
 
   @Get()
-  findAll(@Query('page') page: number=1,@Query('row') row: number=10) {
-    return this.softService.findAll(+page,+row);
+  findAll(@Query('page') page: number = 1, @Query('row') row: number = 10) {
+    return this.softService.findAll(+page, +row);
   }
 
   @Get(':id')
@@ -38,4 +38,12 @@ export class SoftController {
   remove(@Param('id') id: string) {
     return this.softService.remove(+id);
   }
+
+  @Get(':id/download')
+  @Auth()
+  download(@Param('id') id: string) {
+    return this.softService.download(+id);
+  }
+
+  // @Get(':id/download')
 }

@@ -10,18 +10,15 @@ export default (sid: number) => {
             url: `comment/${sid}`
         })
     }
-    const add = async (data:CommentModel) => {
+    const add = async (data:any) => {
+        console.log('data-add',data)
        const comment = await http.request<CommentModel>({
             url: `comment/${sid}`,
             method: 'POST',
             data: data
         })
         model.value.content = '' 
-        if(data.commentId){
-            collections.value.find(item=>item.id===data.commentId)?.replys.push(comment)
-        }else{
-            collections.value.push(comment)
-        }   
+        findAll() 
     }
     const del = async (id: number) => {
         await ElMessageBox.confirm('确定要删除吗？')
@@ -29,8 +26,7 @@ export default (sid: number) => {
             url: `comment/${sid}/${id}`,
             method: 'DELETE'
         })
-        const index = collections.value.findIndex(item => item.id === id)
-        collections.value.splice(index,1)
+        findAll()
     }
     return {findAll,add,del,collections,model}
 }
