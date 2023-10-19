@@ -28,8 +28,9 @@ export class UserController {
   }
 
   @Put('update')
-  async update(@Body() dto: UpdateUserDto, @CurrentUser() user: user) {
-    await this.userService.update(user.id, dto)
+  async update(@Body() dto: any, @CurrentUser() user: user) {
+    const id = user?.id?user.id:dto.id
+    await this.userService.update(id, dto)
     // return {
     //   message: '更新成功'
     // }

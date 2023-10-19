@@ -3,6 +3,7 @@ import useComment from '../../composables/hd/useComment'
 import dayjs from 'dayjs'
 import { use } from 'echarts'
 const { comment, user,replys } = defineProps<{ comment: CommentModel; user?: UserModel,replys?:CommentModel[]}>()
+const _replys = replys as CommentModel[]
 const { model } = useComment(comment.softId)
 model.value.commentId = comment.commentId || comment.id
 const showTextarea = ref(false)
@@ -10,7 +11,7 @@ const { authorize } = useAuth()
 const emit = defineEmits<{
   // (e:'del'):void
   del: [id: number]
-  add: [comment: CommentModel]
+  add?: [comment: CommentModel]
 }>()
 const findName = (replys: CommentModel[],comment:CommentModel) => {
   const replyUser = replys.filter(v=>v.id==comment.replyId)[0]?.user
@@ -35,9 +36,9 @@ const findName = (replys: CommentModel[],comment:CommentModel) => {
         <div class="flex flex-col">
           <div class="font-bold flex">
             <div>{{ comment.user.nickname }}</div>
-            <div v-if="replys?.length>0 && comment.replyId" class="flex items-center">
-              <icon-right theme="filled" size="18" fill="#333" class=" opacity-70" v-if="findName(replys,comment)"/>
-              <span>{{findName(replys,comment)}}</span>
+            <div v-if="_replys?.length>0 && comment.replyId" class="flex items-center">
+              <icon-right theme="filled" size="18" fill="#333" class=" opacity-70" v-if="findName(_replys,comment)"/>
+              <span>{{findName(_replys,comment)}}</span>
             </div>
           </div>
           <div class="flex items-center text-sm gap-2">

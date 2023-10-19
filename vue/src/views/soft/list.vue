@@ -3,6 +3,7 @@
 import dayjs from "dayjs"
 const route = useRoute()
 const { collections, getAll } = useSoft()
+const _collections = collections as globalThis.Ref<ApiPage<ModelSoft>>;
 await getAll(+(route.query.page || 1))
 </script>
 <template>
@@ -11,7 +12,7 @@ await getAll(+(route.query.page || 1))
       <template #header>
         <div class="flex justify-between items-center">软件列表</div>
       </template>
-      <el-table :data="collections.data" style="width: 100%">
+      <el-table :data="_collections.data" style="width: 100%">
       <el-table-column prop="id" label="软件ID" width="100" />
       <el-table-column prop="title" label="软件标题" />
       <el-table-column prop="name" label="软件名字" />

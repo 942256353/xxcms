@@ -11,7 +11,7 @@ await findAll(+(route.query.page || 1))
       <template #header>
         <div class="flex justify-between items-center">用户列表</div>
       </template>
-      <el-table :data="collection.data" style="width: 100%">
+      <el-table v-if="collection" :data="collection.data" style="width: 100%">
       <el-table-column prop="id" label="用户ID" width="100" />
       <el-table-column prop="name" label="用户账号" />
       <el-table-column prop="nickname" label="用户名字" />

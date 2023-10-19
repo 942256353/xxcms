@@ -10,7 +10,8 @@ const downLoadSoft = async (id:number) => {
    //window.open(url,'_seft')
    const a = document.createElement('a')
    a.href = url
-   a.download = model.value.name!
+   const extName = filePath.substring(filePath.lastIndexOf('.'))
+   a.download = model.value.name!+extName
    a.click()
    a.remove()
 }
@@ -23,7 +24,7 @@ const downLoadSoft = async (id:number) => {
           <el-tag type="success" size="small"  effect="plain">{{model.version}}</el-tag>
         </div>
 
-        <div class="">
+        <div class="" v-if="model.id">
           <el-button type="primary" size="default" @click="downLoadSoft(+model.id)">下载软件</el-button>
         </div>
       </h1>
