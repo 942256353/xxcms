@@ -2,7 +2,7 @@
 // import useSoft from '@/composables/useSoft'
 import dayjs from "dayjs"
 const route = useRoute()
-const { collection, getList } = useComment()
+const { collection, getList,del } = useComment()
 await getList(+(route.query.page || 1))
 </script>
 <template>
@@ -29,7 +29,7 @@ await getList(+(route.query.page || 1))
       </el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="{ row }">
-          <el-button v-if="row.id!==1"  type="text" @click="deleteUser(row.id)">删除</el-button>
+          <el-button v-if="row.id!==1"  type="text" @click="del(row.id,row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

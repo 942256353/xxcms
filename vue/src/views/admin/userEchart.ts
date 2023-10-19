@@ -4,6 +4,7 @@ const {generateRandomColor} = useUtils()
 
 
 export const echart1 = (data: MonthCountsModel[]) => {
+  if (data?.length === 0) return {}
   const nameList = data.map(item => item.name)
   const valueList = data.map(item => item.value)
   return {
@@ -30,7 +31,7 @@ export const echart1 = (data: MonthCountsModel[]) => {
 
 
 export const echart2 = (data: MonthSoftCountsModel[]) => {
-  if (data.length === 0) return
+  if (data?.length === 0) return {}
   const softNameList = data.map(item => item.name)
   let nameList = data[0].data.map(d => d.name)
   const series = data.map(v => {
@@ -100,6 +101,7 @@ export const echart2 = (data: MonthSoftCountsModel[]) => {
     yAxis: [
       {
         type: 'value',
+        minInterval: 1
       },
     ],
     series: series
@@ -129,6 +131,7 @@ export const echart3 = {
   yAxis: [
     {
       type: 'value',
+      minInterval: 1
     },
   ],
   series: [
@@ -190,6 +193,7 @@ export const echart3 = {
   ],
 }
 export const echart4 = (data: MonthCountsModel[]) => {
+  if (data?.length === 0) return {}
   const nameList = data.map(item => item.name)
   const valueList = data.map(item => item.value)
   return {

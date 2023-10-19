@@ -26,13 +26,19 @@ export default (sid?: number) => {
         model.value.content = '' 
         findAll() 
     }
-    const del = async (id: number) => {
+    const del = async (id: number,softId?:number) => {
+        sid = sid?sid:softId
         await ElMessageBox.confirm('确定要删除吗？')
         await http.request({
             url: `comment/${sid}/${id}`,
             method: 'DELETE'
         })
-        findAll()
+        if(softId){
+            getList()
+        }else{
+            findAll()
+        }
+       
     }
     return {findAll,add,del,collections,collection,model,getList}
 }
