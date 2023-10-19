@@ -3,9 +3,10 @@ import { http } from '@/plugins/axios'
 export default () => {
   const collections = ref<AdminModel>()
   const getAll = async () => {
-    collections.value = await http.request<AdminModel>({
+    const response = await http.request<ApiData<AdminModel>>({
       url: `/all`,
     })
+    collections.value = response.data;
   }
 
 

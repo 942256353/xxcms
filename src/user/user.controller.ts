@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,6 +8,7 @@ import { user } from '@prisma/client'
 import { JsonResponse } from 'src/core/json.response';
 import { UserResponse } from './user.response';
 import { UserPassword } from './dto/password.dto';
+import { Admin } from 'src/auth/admin.decorator';
 
 @Controller('user')
 export class UserController {
@@ -20,8 +21,13 @@ export class UserController {
     return response
     // return JsonResponse.handle(user,['password'])
   }
-  @Put('update')
+  @Get()
   @Auth()
+  findAll(@Query('page') page: number = 1, @Query('row') row: number = 10) {
+    return this.userService.findAll(+page, +row);
+  }
+
+  @Put('update')
   async update(@Body() dto: UpdateUserDto, @CurrentUser() user: user) {
     await this.userService.update(user.id, dto)
     // return {
@@ -35,6 +41,16 @@ export class UserController {
     await this.userService.updatePassword(user.id, dto)
     return {
       message: '密码更新成功'
+    }
+  }
+
+  @Delete('delete/:id')
+  @Admin()
+  async remove(@Param('id') id: number) {
+    await this.userService.remove(+id)
+    return {
+      code: 200,
+      message: '删除成功'
     }
   }
 }

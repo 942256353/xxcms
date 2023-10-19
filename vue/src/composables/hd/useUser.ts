@@ -1,15 +1,20 @@
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { http } from '@/plugins/axios'
 import { ref } from 'vue'
+import router from '@/plugins/router'
 
 export default () => {
   const collection = ref<ApiPage<UserModel>>()
   const model = ref<UserModel>()
 
-  async function findAll() {
-    collection.value = await http.request<ApiPage<UserModel>>({ url: `user` })
+  // async function findAll() {
+  //   collection.value = await http.request<ApiPage<UserModel>>({ url: `user` })
+  // }
+  const findAll = async (page = 1, row = 10) => {
+    collection.value = await http.request<ApiPage<UserModel>>({
+      url: `user?page=${page}&row=${row}`
+    })
   }
-
   const findOne = async (id: number) => {
     model.value = await http.request<UserModel>({
       url: `user/${id}`,
@@ -45,12 +50,14 @@ export default () => {
   }
 
   //注销帐号
-  const deleteUser = async () => {
+  const deleteUser = async (id:number) => {
+    console.log(id)
+    await ElMessageBox.confirm('确定要删除吗？')
     await http.request<any>({
-      url: `user/delete`,
+      url: `user/delete/${id}`,
       method: 'DELETE',
     })
-    location.href = '/'
+    findAll()
   }
 
   //移除头像

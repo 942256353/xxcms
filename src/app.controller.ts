@@ -1,13 +1,16 @@
-import { Controller, Get, BadRequestException } from '@nestjs/common';
+import { Controller, Get, BadRequestException, UseInterceptors } from '@nestjs/common';
 import { ConfigService } from './common/config.service';
 import { Auth } from './auth/auth.decorator';
 import { Admin } from './auth/admin.decorator';
 import { PrismaService } from './common/prisma.service';
+import { TransformInterceptor } from './transform.interceptor';
+import { getData, getData_Commet } from './help';
+
 
 @Controller()
+@UseInterceptors(new TransformInterceptor())
 export class AppController {
     constructor(private readonly prisma: PrismaService, private configService: ConfigService) {
-
     }
     @Get('all')
     @Admin()
@@ -52,7 +55,7 @@ export class AppController {
                 },
             });
             // 查询当月软件发布数
-            const currentMonthSofts= await this.prisma.soft.count({
+            const currentMonthSofts = await this.prisma.soft.count({
                 where: {
                     createdAt: {
                         gte: firstDayOfMonth,
@@ -70,20 +73,29 @@ export class AppController {
                     commentId: null,
                 },
             });
+
+
+            const monthlyUserCounts = await getData(this.prisma, 'user');
+            const monthlySoftCounts = await getData(this.prisma, 'soft');
+            const monthlyCommentCounts = await getData_Commet(this.prisma, 'comment');
             return {
-                downloadTotal:downloadTotal||0,
-                commentTotal:commentTotal||0,
-                softTotal:softTotal||0,
-                userTotal:userTotal||0,
-                currentMonthDownloads:currentMonthDownloads||0,
-                currentMonthUsers:currentMonthUsers||0,
-                currentMonthSofts:currentMonthSofts||0,
-                currentMonthComments:currentMonthComments||0
+                downloadTotal: downloadTotal || 0,
+                commentTotal: commentTotal || 0,
+                softTotal: softTotal || 0,
+                userTotal: userTotal || 0,
+                currentMonthDownloads: currentMonthDownloads || 0,
+                currentMonthUsers: currentMonthUsers || 0,
+                currentMonthSofts: currentMonthSofts || 0,
+                currentMonthComments: currentMonthComments || 0,
+                monthlyUserCounts,
+                monthlySoftCounts,
+                monthlyCommentCounts
             }
         } catch (error) {
+            console.log(error)
             throw new BadRequestException({
                 "error": "Bad request",
-                "message": error,
+                "message": error.message,
                 "statusCode": 400
             })
         }

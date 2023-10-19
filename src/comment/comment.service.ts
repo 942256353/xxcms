@@ -34,7 +34,54 @@ export class CommentService {
     });
     return comment;
   }
+  async getList(page=1,row=10) {
+  try {
+    const total = await this.prisma.comment.count({
+      where:{
+        commentId:null
+      }
+    })
+    const data = await this.prisma.comment.findMany({
+      skip:(page-1)*row,
+      take:row,
+      orderBy:{
+        id:'desc'
+      },
+      where:{
+        commentId:null
+      }
+    })
+    // if(data?.length>0){
+    //   data.forEach(item=>{
+    //     new SoftResponse(item).make()
+    //   })
+    // }
+    let result = []
+    if(data?.length>0){
+      for(const item of data){
+        const user =await this.prisma.user.findFirst({
+          where:{
+            id:item.userId
+          }
+        })
+        const soft =await this.prisma.soft.findFirst({
+          where:{
+            id:item.softId
+          }
+        })
+        result.push({...item,userName:user.nickname,softName:soft.name,softTitle:soft.title})
+      }
 
+    }
+    return {
+      meta:{page,row,total},
+      data:result
+    }
+  } catch (error) {
+    
+  }
+
+  }
   // async remove(id: number) {
   //   // 删除评论时，删除子评论
   //   const comment = await this.prisma.comment.findUnique({

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import * as echarts from 'echarts'
-import { echart1, echart2, echart3, echart4 } from './echart'
+import { echart1, echart2, echart3, echart4 } from './userEchart'
 import useAdmin from '../../composables/hd/useAdmin'
 const {getAll,collections}  = useAdmin()
 const cards = ref<ICard[]>([
@@ -38,7 +38,11 @@ const cards = ref<ICard[]>([
     totalTitle: '总评论数量',
   },
 ])
-onMounted(async()=>{
+onMounted(()=>{
+  init()
+})
+
+const init = async()=>{
   await getAll()
   const cardData = collections.value as AdminModel
   cards.value[0].monthCount = cardData.currentMonthUsers
@@ -49,7 +53,11 @@ onMounted(async()=>{
   cards.value[2].total = cardData.downloadTotal
   cards.value[3].monthCount = cardData.currentMonthComments
   cards.value[3].total = cardData.commentTotal
-})
+  echarts.init(document.getElementById('echart1') as HTMLDivElement).setOption(echart1(cardData.monthlyUserCounts))
+  echarts.init(document.getElementById('echart2') as HTMLDivElement).setOption(echart2(cardData.monthlyCommentCounts))
+  echarts.init(document.getElementById('echart3') as HTMLDivElement).setOption(echart3)
+  echarts.init(document.getElementById('echart4') as HTMLDivElement).setOption(echart4(cardData.monthlySoftCounts))
+}
 
 interface ICard {
   title: string
@@ -61,12 +69,9 @@ interface ICard {
 }
 
 
-nextTick(() => {
-  echarts.init(document.getElementById('echart1') as HTMLDivElement).setOption(echart1)
-  echarts.init(document.getElementById('echart2') as HTMLDivElement).setOption(echart2)
-  echarts.init(document.getElementById('echart3') as HTMLDivElement).setOption(echart3)
-  echarts.init(document.getElementById('echart4') as HTMLDivElement).setOption(echart4)
-})
+// nextTick(() => {
+
+// })
 </script>
 
 <template>
@@ -98,24 +103,24 @@ nextTick(() => {
 
     <div class="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-3">
       <el-card shadow="hover" :body-style="{ padding: '20px' }">
-        <template #header> 用户统计 </template>
+        <template #header> 年度用户注册数量统计 </template>
         <div id="echart1" class="h-72"></div>
       </el-card>
       <el-card shadow="hover" :body-style="{ padding: '20px' }">
-        <template #header> 销售额 </template>
+        <template #header> 年度软件评论数量统计 </template>
         <div id="echart2" class="h-72"></div>
       </el-card>
       <el-card shadow="hover" :body-style="{ padding: '20px' }">
-        <template #header> 搜索来源 </template>
-        <div id="echart3" class="h-72"></div>
+        <template #header> 年度软件上架数量统计 </template>
+        <div id="echart4" class="h-72"></div>
       </el-card>
       <el-card shadow="hover" :body-style="{ padding: '20px' }">
-        <template #header> 订单分析 </template>
-        <div id="echart4" class="h-72"></div>
+        <template #header> 访问来源 </template>
+        <div id="echart3" class="h-72"></div>
       </el-card>
     </div>
   </div>
 </template>
 
 <style lang="scss"></style>
-@/composables/hd/useAdmin
+@/composables/hd/useAdmin./userEchart

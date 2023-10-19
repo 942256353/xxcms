@@ -19,7 +19,7 @@ await getAll(+(route.query.page || 1))
           :key="soft.id"
           class="rounded-sm border"
           :soft="soft"
-          show-button="true" />
+          :show-button="true" />
       </main>
     </el-card>
     <el-pagination
@@ -28,12 +28,10 @@ await getAll(+(route.query.page || 1))
       :current-page="collections?.meta.page"
       :page-sizes="[20, 40, 80, 100]"
       :page-size="collections?.meta.row"
-      :total="collections?.meta.total" background>
+      :total="collections?.meta.total" background
       :pager-count="7">
     </el-pagination>
-    
   </main>
 </template>
 <style scoped>
 </style>
-@/composables/hd/useSoft

@@ -45,6 +45,12 @@ interface CommentModel {
   replys: CommentModel[];
 }
 
+interface MonthCountsModel {name: string, value: number}
+interface MonthSoftCountsModel {
+  softId: string,
+  name:string,
+  data:MonthCountsModel[]
+}
 interface AdminModel {
   downloadTotal: number;
   commentTotal: number;
@@ -54,6 +60,9 @@ interface AdminModel {
   currentMonthUsers: number;
   currentMonthSofts: number;
   currentMonthComments: number;
+  monthlyUserCounts: MonthCountsModel[];
+  monthlySoftCounts: MonthCountsModel[];
+  monthlyCommentCounts: MonthSoftCountsModel[];
 }
 interface ConfigModel {
   [key: string]: Record<string, any>

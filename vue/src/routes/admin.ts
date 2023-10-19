@@ -20,6 +20,24 @@ export default [
         meta: { title: '软件管理', menu: { title: '软件管理' } },
       },
       {
+        name: 'soft.list',
+        path: 'soft/list',
+        component: () => import('@/views/soft/list.vue'),
+        meta: { title: '软件列表', menu: { title: '软件列表' } },
+      },
+      {
+        name: 'user.list',
+        path: 'user/list',
+        component: () => import('@/views/user/list.vue'),
+        meta: { title: '用户列表', menu: { title: '用户列表' } },
+      },
+      {
+        name: 'comment.list',
+        path: 'comment/list',
+        component: () => import('@/views/comment/list.vue'),
+        meta: { title: '评论列表', menu: { title: '评论列表' } },
+      },
+      {
         name:'soft.create',
         path: 'soft/create',
         component: () => import('@/views/soft/form.vue'),

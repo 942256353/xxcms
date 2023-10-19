@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/common/prisma.service';
 import { UserPassword } from './dto/password.dto';
 import { hash } from 'argon2';
+import { UserResponse } from './user.response';
 
 @Injectable()
 export class UserService {
@@ -12,9 +13,26 @@ export class UserService {
   //   return 'This action adds a new user';
   // }
 
-  // findAll() {
-  //   return `This action returns all user`;
-  // }
+  async findAll(page=1,row=10) {
+    const total = await this.prisma.user.count()
+    const data = await this.prisma.user.findMany({
+      skip:(page-1)*row,
+      take:row,
+      orderBy:{
+        id:'desc'
+      }
+    })
+    if(data?.length>0){
+      data.forEach(item=>{
+        new UserResponse(item).make()
+      })
+    }
+    return {
+      meta:{page,row,total},
+      data
+    }
+
+  }
 
   // findOne(id: number) {
   //   return `This action returns a #${id} user`;
@@ -35,6 +53,9 @@ export class UserService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.prisma.user.deleteMany({
+      where: { id
+        }
+    })
   }
 }

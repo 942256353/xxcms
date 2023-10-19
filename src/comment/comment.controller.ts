@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -11,11 +11,19 @@ import { PolicyGuard } from 'src/policy/policy.guard';
 import { CommentResponse } from './comment.response';
 import { Throttle } from '@nestjs/throttler';
 
-@Controller('comment/:sid')
+@Controller('comment')
 export class CommentController {
   constructor(private readonly commentService: CommentService) { }
 
-  @Post()
+  
+  @Get('list')
+  @Auth()
+  getList(@Query('page') page: number = 1, @Query('row') row: number = 10) {
+    console.log(11111);
+    return this.commentService.getList(+page, +row);
+  }
+
+  @Post(':sid')
   @Auth()
   @Throttle({ default: { limit: 10, ttl: 5000 } })
   async create(@Body() createCommentDto: CreateCommentDto, @CurrentUser() user: user, @Param('sid') sid: number) {
@@ -23,18 +31,18 @@ export class CommentController {
     return new CommentResponse(comment).make()
   }
 
-  @Get()
+  @Get(':sid')
   @Auth()
   async findAll(@Param('sid') sid: number) {
-    console.log(sid)
+    console.log(22222);
     const comments = await this.commentService.findAll(+sid);
     return comments.map(comment => {
       return new CommentResponse(comment).make()
     })
   }
+  
 
-
-  @Delete(':id')
+  @Delete(':sid/:id')
   //登录 你是评论的作者 管理员
   //守卫 执行验证
   @UseGuards(PolicyGuard)
