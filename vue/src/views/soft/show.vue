@@ -3,6 +3,7 @@ const { find, model,download } = useSoft()
 const route = useRoute()
 
 model.value = await find(+route.params.id)
+const id = model.value.id as number
 const tabName = ref('content')
 const downLoadSoft = async (id:number) => {
    const filePath = await download(id)
@@ -24,8 +25,8 @@ const downLoadSoft = async (id:number) => {
           <el-tag type="success" size="small"  effect="plain">{{model.version}}</el-tag>
         </div>
 
-        <div class="" v-if="model.id">
-          <el-button type="primary" size="default" @click="downLoadSoft(+model.id)">下载软件</el-button>
+        <div class="">
+          <el-button type="primary" size="default" @click="downLoadSoft(+id)">下载软件</el-button>
         </div>
       </h1>
     </section>
