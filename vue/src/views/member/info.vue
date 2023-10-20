@@ -14,7 +14,7 @@ const tab = ref('info')
             <el-input placeholder="起个有个性的昵称吧" v-model="user.name" disabled></el-input>
           </el-form-item>
           <el-form-item label="昵称">
-            <el-input placeholder="用于活动邮寄礼品使用" v-model="user.nickname"></el-input>
+            <el-input placeholder="起个有个性的昵称吧" v-model="user.nickname"></el-input>
             <HdError name="name" />
           </el-form-item>
           
