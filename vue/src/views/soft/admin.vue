@@ -13,7 +13,7 @@ await getAll(+(route.query.page || 1))
           <el-button type="primary" @click="$router.push({ name: 'soft.create' })">上架软件</el-button>
         </div>
       </template>
-      <main class="grid grid-cols-5 gap-2" v-if="collections">
+      <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2" v-if="collections">
         <HdSoftItem
           v-for="soft in collections.data"
           :key="soft.id"
